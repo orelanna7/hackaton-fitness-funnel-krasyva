@@ -68,7 +68,7 @@ export const useFunnelStore = create<FunnelState>((set) => ({
 // Utility functions for funnel logic
 export const calculateProgress = (
   currentStep: number,
-  totalSteps: number = 10,
+  totalSteps: number = 5,
 ): number => {
   return Math.round((currentStep / totalSteps) * 100);
 };
