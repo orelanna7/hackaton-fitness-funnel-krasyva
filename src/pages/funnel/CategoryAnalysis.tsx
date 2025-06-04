@@ -127,13 +127,13 @@ const CategoryAnalysis = () => {
   };
 
   const handleContinue = () => {
-    completeStep(8);
+    completeStep(3);
     navigate("/funnel/sport-match");
   };
 
   return (
     <FunnelLayout
-      step={8}
+      step={3}
       title="Analyzing Your Fitness Profile"
       subtitle="We're processing your responses to find your perfect workout match"
     >

@@ -55,7 +55,7 @@ const PhotoUpload = () => {
 
   const handleContinue = () => {
     completeStep(2);
-    navigate("/funnel/question-1");
+    navigate("/funnel/category-analysis");
   };
 
   return (

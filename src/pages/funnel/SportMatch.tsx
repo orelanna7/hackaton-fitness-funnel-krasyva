@@ -121,14 +121,14 @@ const SportMatch = () => {
   }, [isInitialized, sportResults]);
 
   const handleContinue = () => {
-    completeStep(9);
+    completeStep(4);
     navigate("/funnel/pricing");
   };
 
   if (!isInitialized || sportResults.length === 0) {
     return (
       <FunnelLayout
-        step={9}
+        step={4}
         title="Calculating Your Perfect Match..."
         subtitle="Processing your responses to find your ideal workout"
       >
@@ -150,7 +150,7 @@ const SportMatch = () => {
 
   return (
     <FunnelLayout
-      step={9}
+      step={4}
       title="Your Perfect Fitness Match!"
       subtitle="Based on your preferences and goals, we've found your ideal workout"
     >

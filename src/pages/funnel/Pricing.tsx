@@ -71,7 +71,7 @@ const Pricing = () => {
   };
 
   const handleSelectPlan = (planName: string) => {
-    completeStep(10);
+    completeStep(5);
     // In a real app, this would redirect to payment processing
     alert(
       `Thank you for choosing the ${planName} plan! Your personalized ${userData.idealSport} program is being prepared.`,
@@ -81,7 +81,7 @@ const Pricing = () => {
   return (
     <>
       <FunnelLayout
-        step={10}
+        step={5}
         title="Choose Your Fitness Plan"
         subtitle="Get started with your personalized fitness journey today"
       >

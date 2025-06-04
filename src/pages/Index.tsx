@@ -88,7 +88,7 @@ const Index = () => {
           >
             <div className="relative">
               <div className="flex justify-center items-center space-x-4 mb-8">
-                {[1, 2, 3, 4, 5].map((step, index) => (
+                {[1, 2, 3].map((step, index) => (
                   <motion.div
                     key={step}
                     className="flex items-center"
@@ -99,7 +99,7 @@ const Index = () => {
                     <div className="w-12 h-12 rounded-full bg-fitness-accent text-white flex items-center justify-center font-bold text-lg shadow-lg">
                       {step}
                     </div>
-                    {index < 4 && (
+                    {index < 2 && (
                       <motion.div
                         className="w-8 h-0.5 bg-fitness-accent/50 mx-2"
                         initial={{ scaleX: 0 }}
@@ -117,7 +117,7 @@ const Index = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.8 }}
               >
-                Photo Analysis → Quiz Questions → Smart Matching → Perfect Plan
+                Photo Analysis → Smart Matching → Perfect Plan
               </motion.p>
             </div>
           </motion.div>
