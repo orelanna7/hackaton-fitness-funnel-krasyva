@@ -21,68 +21,10 @@ const SportMatch = () => {
   const [currentPercentage, setCurrentPercentage] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [sportResults, setSportResults] = useState<SportResult[]>([]);
+  const [isInitialized, setIsInitialized] = useState(false);
+
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    // Calculate sport matches only once when component mounts
-    const matchData = calculateSportMatch(userData);
-
-    const results: SportResult[] = [
-      {
-        name: matchData.idealSport,
-        percentage: matchData.matchPercentage,
-        isIdeal: true,
-        icon: getSportIcon(matchData.idealSport),
-        description: getSportDescription(matchData.idealSport),
-      },
-      ...matchData.alternatives.map((alt) => ({
-        name: alt.name,
-        percentage: alt.percentage,
-        icon: getSportIcon(alt.name),
-        description: getSportDescription(alt.name),
-      })),
-    ];
-
-    setSportResults(results);
-
-    // Update user data only if it hasn't been set yet
-    if (!userData.idealSport) {
-      updateUserData({
-        idealSport: matchData.idealSport,
-        matchPercentage: matchData.matchPercentage,
-        alternativeSports: matchData.alternatives,
-      });
-    }
-
-    // Animate percentage counter
-    timeoutRef.current = setTimeout(() => {
-      intervalRef.current = setInterval(() => {
-        setCurrentPercentage((prev) => {
-          if (prev >= matchData.matchPercentage) {
-            if (intervalRef.current) {
-              clearInterval(intervalRef.current);
-              intervalRef.current = null;
-            }
-            setTimeout(() => setShowResults(true), 500);
-            return matchData.matchPercentage;
-          }
-          return prev + 2;
-        });
-      }, 50);
-    }, 1000);
-
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    };
-  }, []); // Remove dependencies to prevent infinite re-renders
 
   const getSportIcon = (sport: string) => {
     const icons: { [key: string]: string } = {
@@ -109,10 +51,102 @@ const SportMatch = () => {
     return descriptions[sport] || "A great fitness activity for your goals";
   };
 
+  // Initialize data only once
+  useEffect(() => {
+    if (!isInitialized) {
+      const matchData = calculateSportMatch(userData);
+
+      const results: SportResult[] = [
+        {
+          name: matchData.idealSport,
+          percentage: matchData.matchPercentage,
+          isIdeal: true,
+          icon: getSportIcon(matchData.idealSport),
+          description: getSportDescription(matchData.idealSport),
+        },
+        ...matchData.alternatives.map((alt) => ({
+          name: alt.name,
+          percentage: alt.percentage,
+          icon: getSportIcon(alt.name),
+          description: getSportDescription(alt.name),
+        })),
+      ];
+
+      setSportResults(results);
+
+      // Only update if not already set
+      if (!userData.idealSport) {
+        updateUserData({
+          idealSport: matchData.idealSport,
+          matchPercentage: matchData.matchPercentage,
+          alternativeSports: matchData.alternatives,
+        });
+      }
+
+      setIsInitialized(true);
+    }
+  }, [isInitialized, userData, updateUserData]);
+
+  // Animate percentage counter
+  useEffect(() => {
+    if (isInitialized && sportResults.length > 0) {
+      timeoutRef.current = setTimeout(() => {
+        intervalRef.current = setInterval(() => {
+          setCurrentPercentage((prev) => {
+            const targetPercentage = sportResults[0]?.percentage || 0;
+            if (prev >= targetPercentage) {
+              if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+                intervalRef.current = null;
+              }
+              setTimeout(() => setShowResults(true), 500);
+              return targetPercentage;
+            }
+            return prev + 2;
+          });
+        }, 50);
+      }, 1000);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [isInitialized, sportResults]);
+
   const handleContinue = () => {
     completeStep(9);
     navigate("/funnel/pricing");
   };
+
+  if (!isInitialized || sportResults.length === 0) {
+    return (
+      <FunnelLayout
+        step={9}
+        title="Calculating Your Perfect Match..."
+        subtitle="Processing your responses to find your ideal workout"
+      >
+        <div className="text-center">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="text-4xl mb-4 inline-block"
+          >
+            ⚡
+          </motion.div>
+          <p className="text-fitness-text/70">
+            Please wait while we analyze your preferences...
+          </p>
+        </div>
+      </FunnelLayout>
+    );
+  }
 
   return (
     <FunnelLayout
