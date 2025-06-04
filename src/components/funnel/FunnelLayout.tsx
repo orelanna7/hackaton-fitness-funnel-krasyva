@@ -31,7 +31,7 @@ const FunnelLayout: React.FC<FunnelLayoutProps> = ({
         <div className="fixed top-0 left-0 right-0 z-50">
           <ProgressBar
             progress={progress}
-            showBackButton={showBackButton && step > 1}
+            showBackButton={showBackButton}
             onBack={onBack}
           />
         </div>
