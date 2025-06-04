@@ -19,6 +19,13 @@ export default {
     },
     extend: {
       colors: {
+        // Fitness app brand colors
+        "fitness-accent": "#946FFF",
+        "fitness-text": "#3A2D5F",
+        "fitness-bg": "#F8F5FF",
+        "fitness-accent-light": "#B794FF",
+        "fitness-accent-dark": "#7B5AE6",
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -85,10 +92,30 @@ export default {
             height: "0",
           },
         },
+        scan: {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(200%)" },
+        },
+        "pulse-glow": {
+          "0%, 100%": { boxShadow: "0 0 5px #946FFF" },
+          "50%": { boxShadow: "0 0 20px #946FFF, 0 0 30px #946FFF" },
+        },
+        "bounce-gentle": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "gradient-x": {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        scan: "scan 2s linear infinite",
+        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        "bounce-gentle": "bounce-gentle 2s ease-in-out infinite",
+        "gradient-x": "gradient-x 3s ease infinite",
       },
     },
   },
