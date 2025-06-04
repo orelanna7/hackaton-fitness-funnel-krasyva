@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Trophy, Star, Zap, Heart } from "lucide-react";
@@ -21,9 +21,11 @@ const SportMatch = () => {
   const [currentPercentage, setCurrentPercentage] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [sportResults, setSportResults] = useState<SportResult[]>([]);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // Calculate sport matches
+    // Calculate sport matches only once when component mounts
     const matchData = calculateSportMatch(userData);
 
     const results: SportResult[] = [
@@ -43,18 +45,25 @@ const SportMatch = () => {
     ];
 
     setSportResults(results);
-    updateUserData({
-      idealSport: matchData.idealSport,
-      matchPercentage: matchData.matchPercentage,
-      alternativeSports: matchData.alternatives,
-    });
+
+    // Update user data only if it hasn't been set yet
+    if (!userData.idealSport) {
+      updateUserData({
+        idealSport: matchData.idealSport,
+        matchPercentage: matchData.matchPercentage,
+        alternativeSports: matchData.alternatives,
+      });
+    }
 
     // Animate percentage counter
-    const timer = setTimeout(() => {
-      const interval = setInterval(() => {
+    timeoutRef.current = setTimeout(() => {
+      intervalRef.current = setInterval(() => {
         setCurrentPercentage((prev) => {
           if (prev >= matchData.matchPercentage) {
-            clearInterval(interval);
+            if (intervalRef.current) {
+              clearInterval(intervalRef.current);
+              intervalRef.current = null;
+            }
             setTimeout(() => setShowResults(true), 500);
             return matchData.matchPercentage;
           }
@@ -63,8 +72,17 @@ const SportMatch = () => {
       }, 50);
     }, 1000);
 
-    return () => clearTimeout(timer);
-  }, [userData, updateUserData]);
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, []); // Remove dependencies to prevent infinite re-renders
 
   const getSportIcon = (sport: string) => {
     const icons: { [key: string]: string } = {

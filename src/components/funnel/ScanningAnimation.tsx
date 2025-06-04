@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ScanningAnimationProps {
@@ -13,26 +13,49 @@ const ScanningAnimation: React.FC<ScanningAnimationProps> = ({
   duration = 3000,
 }) => {
   const [scanProgress, setScanProgress] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const hasCompletedRef = useRef(false);
+
+  const handleScanComplete = useCallback(() => {
+    if (!hasCompletedRef.current && onScanComplete) {
+      hasCompletedRef.current = true;
+      onScanComplete();
+    }
+  }, [onScanComplete]);
 
   useEffect(() => {
     if (!isScanning) {
       setScanProgress(0);
+      hasCompletedRef.current = false;
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
       return;
     }
 
-    const interval = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setScanProgress((prev) => {
         if (prev >= 100) {
-          clearInterval(interval);
-          onScanComplete?.();
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+          // Use setTimeout to avoid calling setState during render
+          setTimeout(() => handleScanComplete(), 0);
           return 100;
         }
         return prev + 2;
       });
     }, duration / 50);
 
-    return () => clearInterval(interval);
-  }, [isScanning, duration, onScanComplete]);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [isScanning, duration, handleScanComplete]);
 
   return (
     <AnimatePresence>
