@@ -1,24 +1,52 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface ProgressBarProps {
   progress: number;
   showPercentage?: boolean;
   animated?: boolean;
+  showBackButton?: boolean;
+  onBack?: () => void;
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
   progress,
   showPercentage = true,
   animated = true,
+  showBackButton = true,
+  onBack,
 }) => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      navigate(-1);
+    }
+  };
   return (
     <div className="w-full bg-white/80 backdrop-blur-sm border-b border-fitness-accent/20">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-fitness-text">
-            Progress
-          </span>
+          <div className="flex items-center space-x-3">
+            {showBackButton && (
+              <Button
+                onClick={handleBack}
+                variant="ghost"
+                size="sm"
+                className="p-1 h-auto hover:bg-fitness-accent/10 text-fitness-text"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </Button>
+            )}
+            <span className="text-sm font-medium text-fitness-text">
+              Progress
+            </span>
+          </div>
           {showPercentage && (
             <span className="text-sm font-medium text-fitness-accent">
               {progress}%

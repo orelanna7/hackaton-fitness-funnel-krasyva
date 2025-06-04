@@ -9,6 +9,8 @@ interface FunnelLayoutProps {
   title: string;
   subtitle?: string;
   showProgress?: boolean;
+  showBackButton?: boolean;
+  onBack?: () => void;
 }
 
 const FunnelLayout: React.FC<FunnelLayoutProps> = ({
@@ -17,6 +19,8 @@ const FunnelLayout: React.FC<FunnelLayoutProps> = ({
   title,
   subtitle,
   showProgress = true,
+  showBackButton = true,
+  onBack,
 }) => {
   const { userData } = useFunnelStore();
   const progress = calculateProgress(step);
@@ -25,7 +29,11 @@ const FunnelLayout: React.FC<FunnelLayoutProps> = ({
     <div className="min-h-screen bg-fitness-bg">
       {showProgress && (
         <div className="fixed top-0 left-0 right-0 z-50">
-          <ProgressBar progress={progress} />
+          <ProgressBar
+            progress={progress}
+            showBackButton={showBackButton && step > 1}
+            onBack={onBack}
+          />
         </div>
       )}
 
