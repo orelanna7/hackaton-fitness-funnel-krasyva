@@ -96,12 +96,10 @@ export const calculateSportMatch = (
 } => {
   // Mock calculation based on user preferences
   const sports = [
-    { name: "Pilates", baseScore: 70 },
-    { name: "Yoga", baseScore: 60 },
-    { name: "Gym Training", baseScore: 50 },
-    { name: "Running", baseScore: 40 },
-    { name: "Swimming", baseScore: 65 },
-    { name: "Cycling", baseScore: 55 },
+    { name: "Pilates", baseScore: 75 },
+    { name: "Yoga", baseScore: 70 },
+    { name: "Chair Yoga", baseScore: 65 },
+    { name: "Walking", baseScore: 60 },
   ];
 
   // Adjust scores based on user data
