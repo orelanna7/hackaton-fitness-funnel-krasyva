@@ -110,7 +110,7 @@ const CategoryAnalysis = () => {
   const getRandomQuestion = () => {
     const questions = [
       "Do you prefer indoor or outdoor activities?",
-      "How important is having a workout buddy?",
+      "Is it important to have a training buddy?",
       "Do you enjoy competitive activities?",
       "Would you prefer morning or evening workouts?",
       "How do you feel about high-intensity exercises?",
@@ -256,14 +256,14 @@ const CategoryAnalysis = () => {
                 variant="outline"
                 className="w-full"
               >
-                Morning
+                Yes
               </Button>
               <Button
                 onClick={() => handleModalAnswer("option2")}
                 variant="outline"
                 className="w-full"
               >
-                Evening
+                No
               </Button>
             </div>
           </div>
