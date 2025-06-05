@@ -108,15 +108,35 @@ export const calculateSportMatch = (
   sports.forEach((sport) => {
     if (
       userData.fitnessGoal === "flexibility" &&
-      (sport.name === "Pilates" || sport.name === "Yoga")
+      (sport.name === "Pilates" ||
+        sport.name === "Yoga" ||
+        sport.name === "Chair Yoga")
     ) {
       sport.baseScore += 20;
     }
-    if (userData.fitnessGoal === "strength" && sport.name === "Gym Training") {
-      sport.baseScore += 25;
-    }
-    if (userData.exerciseFrequency === "daily" && sport.name === "Running") {
+    if (
+      userData.fitnessGoal === "wellness" &&
+      (sport.name === "Yoga" ||
+        sport.name === "Chair Yoga" ||
+        sport.name === "Walking")
+    ) {
       sport.baseScore += 15;
+    }
+    if (
+      userData.exerciseFrequency === "never" ||
+      userData.exerciseFrequency === "rarely"
+    ) {
+      if (sport.name === "Chair Yoga" || sport.name === "Walking") {
+        sport.baseScore += 20;
+      }
+    }
+    if (
+      userData.exerciseFrequency === "often" ||
+      userData.exerciseFrequency === "daily"
+    ) {
+      if (sport.name === "Pilates" || sport.name === "Yoga") {
+        sport.baseScore += 15;
+      }
     }
 
     // Add some randomness for demo
@@ -126,7 +146,7 @@ export const calculateSportMatch = (
   sports.sort((a, b) => b.baseScore - a.baseScore);
 
   const idealSport = sports[0];
-  const alternatives = sports.slice(1, 4).map((sport) => ({
+  const alternatives = sports.slice(1, 3).map((sport) => ({
     name: sport.name,
     percentage: Math.max(Math.round(sport.baseScore), 10),
   }));

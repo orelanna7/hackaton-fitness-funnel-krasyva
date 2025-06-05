@@ -30,10 +30,8 @@ const SportMatch = () => {
     const icons: { [key: string]: string } = {
       Pilates: "🧘‍♀️",
       Yoga: "🕉️",
-      "Gym Training": "🏋️‍♂️",
-      Running: "🏃‍♂️",
-      Swimming: "🏊‍♀️",
-      Cycling: "🚴‍♂️",
+      "Chair Yoga": "🪑",
+      Walking: "🚶‍♀️",
     };
     return icons[sport] || "💪";
   };
@@ -43,10 +41,10 @@ const SportMatch = () => {
       Pilates:
         "Perfect for core strength, flexibility, and mind-body connection",
       Yoga: "Ideal for flexibility, stress relief, and overall wellness",
-      "Gym Training": "Great for building strength and muscle definition",
-      Running: "Excellent for cardiovascular health and endurance",
-      Swimming: "Full-body workout that's easy on joints",
-      Cycling: "Low-impact cardio that builds leg strength",
+      "Chair Yoga":
+        "Gentle yoga practice that can be done seated - perfect for all abilities",
+      Walking:
+        "Simple, accessible exercise that improves cardiovascular health and mood",
     };
     return descriptions[sport] || "A great fitness activity for your goals";
   };
@@ -237,7 +235,7 @@ const SportMatch = () => {
                 Other Great Options for You
               </h3>
 
-              <div className="grid md:grid-cols-3 gap-4">
+              <div className="grid md:grid-cols-2 gap-4">
                 {sportResults.slice(1).map((sport, index) => (
                   <motion.div
                     key={sport.name}
