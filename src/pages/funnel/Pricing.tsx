@@ -86,8 +86,8 @@ const Pricing = () => {
           onClick={() => handleSelectPlan(plan.name)}
           className={`py-3 text-sm ${
             plan.popular
-              ? 'bg-fitness-accent hover:bg-fitness-accent-dark text-white'
-              : 'bg-gray-100 hover:bg-gray-200 text-fitness-text'
+              ? "bg-fitness-accent hover:bg-fitness-accent-dark text-white"
+              : "bg-gray-100 hover:bg-gray-200 text-fitness-text"
           }`}
         >
           {plan.name}
@@ -167,12 +167,14 @@ const Pricing = () => {
                     </ul>
                   </div>
 
-                  <div className={`w-full py-3 text-center rounded-md ${
+                  <div
+                    className={`w-full py-3 text-center rounded-md ${
                       plan.popular
-                        ? 'bg-fitness-accent/10 text-fitness-accent border-2 border-fitness-accent'
-                        : 'bg-gray-50 text-fitness-text border border-gray-200'
-                    }`}>
-                    {plan.popular ? 'Recommended' : 'Available'}
+                        ? "bg-fitness-accent/10 text-fitness-accent border-2 border-fitness-accent"
+                        : "bg-gray-50 text-fitness-text border border-gray-200"
+                    }`}
+                  >
+                    {plan.popular ? "Recommended" : "Available"}
                   </div>
                 </Card>
               </motion.div>
@@ -219,13 +221,17 @@ const Pricing = () => {
                       Click to reveal your special bonus!
                     </p>
 
-                  <div className={`w-full py-3 text-center rounded-md ${
-                      plan.popular
-                        ? 'bg-fitness-accent/10 text-fitness-accent border-2 border-fitness-accent'
-                        : 'bg-gray-50 text-fitness-text border border-gray-200'
-                    }`}>
-                    {plan.popular ? 'Recommended' : 'Available'}
-                  </div>
+                    <Button
+                      onClick={handleBonusClick}
+                      variant="outline"
+                      className="border-fitness-accent text-fitness-accent hover:bg-fitness-accent hover:text-white"
+                    >
+                      <Gift className="w-4 h-4 mr-2" />
+                      Reveal Bonus
+                    </Button>
+                  </motion.div>
+                ) : (
+                  <motion.div
                     key="bonus-revealed"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
