@@ -169,14 +169,13 @@ const Pricing = () => {
 
                   <Button
                     onClick={() => handleSelectPlan(plan.name)}
-                    className={`w-full py-3 ${
+                  <div className={`w-full py-3 text-center rounded-md ${
                       plan.popular
-                        ? "bg-fitness-accent hover:bg-fitness-accent-dark text-white"
-                        : "bg-gray-100 hover:bg-gray-200 text-fitness-text"
-                    }`}
-                  >
-                    Choose {plan.name}
-                  </Button>
+                        ? 'bg-fitness-accent/10 text-fitness-accent border-2 border-fitness-accent'
+                        : 'bg-gray-50 text-fitness-text border border-gray-200'
+                    }`}>
+                    {plan.popular ? 'Recommended' : 'Available'}
+                  </div>
                 </Card>
               </motion.div>
             ))}
