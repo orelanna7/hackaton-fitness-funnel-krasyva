@@ -256,14 +256,14 @@ const CategoryAnalysis = () => {
                 variant="outline"
                 className="w-full"
               >
-                Option A
+                Morning
               </Button>
               <Button
                 onClick={() => handleModalAnswer("option2")}
                 variant="outline"
                 className="w-full"
               >
-                Option B
+                Evening
               </Button>
             </div>
           </div>
