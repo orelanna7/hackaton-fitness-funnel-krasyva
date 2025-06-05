@@ -100,9 +100,13 @@ const CategoryAnalysis = () => {
 
       return () => clearTimeout(timer);
     } else {
-      // All categories analyzed
+      // All categories analyzed - automatically move to next step
       setTimeout(() => {
         setIsComplete(true);
+        // Auto-navigate to next step after a brief delay
+        setTimeout(() => {
+          handleContinue();
+        }, 1500);
       }, 1000);
     }
   }, [currentAnalyzing]);
