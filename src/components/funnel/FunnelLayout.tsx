@@ -11,6 +11,7 @@ interface FunnelLayoutProps {
   showProgress?: boolean;
   showBackButton?: boolean;
   onBack?: () => void;
+  ctaButton?: React.ReactNode;
 }
 
 const FunnelLayout: React.FC<FunnelLayoutProps> = ({
@@ -21,6 +22,7 @@ const FunnelLayout: React.FC<FunnelLayoutProps> = ({
   showProgress = true,
   showBackButton = true,
   onBack,
+  ctaButton,
 }) => {
   const { userData } = useFunnelStore();
   const progress = calculateProgress(step);
@@ -37,7 +39,9 @@ const FunnelLayout: React.FC<FunnelLayoutProps> = ({
         </div>
       )}
 
-      <div className="container mx-auto px-4 py-8 pt-24">
+      <div
+        className={`container mx-auto px-4 py-8 pt-24 ${ctaButton ? "pb-32" : ""}`}
+      >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -75,6 +79,13 @@ const FunnelLayout: React.FC<FunnelLayoutProps> = ({
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Sticky CTA Button */}
+      {ctaButton && (
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-t border-fitness-accent/20 p-4 shadow-lg">
+          <div className="container mx-auto max-w-4xl">{ctaButton}</div>
+        </div>
+      )}
     </div>
   );
 };

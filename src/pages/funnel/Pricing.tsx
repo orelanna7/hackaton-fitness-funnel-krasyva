@@ -78,12 +78,31 @@ const Pricing = () => {
     );
   };
 
+  const ctaButton = (
+    <div className="grid grid-cols-3 gap-3">
+      {plans.map((plan, index) => (
+        <Button
+          key={plan.name}
+          onClick={() => handleSelectPlan(plan.name)}
+          className={`py-3 text-sm ${
+            plan.popular
+              ? 'bg-fitness-accent hover:bg-fitness-accent-dark text-white'
+              : 'bg-gray-100 hover:bg-gray-200 text-fitness-text'
+          }`}
+        >
+          {plan.name}
+        </Button>
+      ))}
+    </div>
+  );
+
   return (
     <>
       <FunnelLayout
         step={5}
         title="Choose Your Fitness Plan"
         subtitle="Get started with your personalized fitness journey today"
+        ctaButton={ctaButton}
       >
         <div className="max-w-6xl mx-auto">
           {/* Pricing Cards */}
@@ -203,17 +222,13 @@ const Pricing = () => {
                       Click to reveal your special bonus!
                     </p>
 
-                    <Button
-                      onClick={handleBonusClick}
-                      variant="outline"
-                      className="border-fitness-accent text-fitness-accent hover:bg-fitness-accent hover:text-white"
-                    >
-                      <Gift className="w-4 h-4 mr-2" />
-                      Reveal Bonus
-                    </Button>
-                  </motion.div>
-                ) : (
-                  <motion.div
+                  <div className={`w-full py-3 text-center rounded-md ${
+                      plan.popular
+                        ? 'bg-fitness-accent/10 text-fitness-accent border-2 border-fitness-accent'
+                        : 'bg-gray-50 text-fitness-text border border-gray-200'
+                    }`}>
+                    {plan.popular ? 'Recommended' : 'Available'}
+                  </div>
                     key="bonus-revealed"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}

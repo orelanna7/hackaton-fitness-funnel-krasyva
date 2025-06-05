@@ -58,11 +58,41 @@ const PhotoUpload = () => {
     navigate("/funnel/category-analysis");
   };
 
+  const ctaButton = (
+    <>
+      {!uploadedImage ? (
+        <Button
+          onClick={() => fileInputRef.current?.click()}
+          className="bg-fitness-accent hover:bg-fitness-accent-dark text-white w-full py-3"
+        >
+          <Upload className="w-4 h-4 mr-2" />
+          Choose Photo
+        </Button>
+      ) : !analysisComplete && !isScanning ? (
+        <Button
+          onClick={handleAnalyze}
+          className="bg-fitness-accent hover:bg-fitness-accent-dark text-white w-full py-3"
+        >
+          <Camera className="w-4 h-4 mr-2" />
+          Analyze Photo
+        </Button>
+      ) : analysisComplete ? (
+        <Button
+          onClick={handleContinue}
+          className="bg-fitness-accent hover:bg-fitness-accent-dark text-white w-full py-3"
+        >
+          Continue to Analysis
+        </Button>
+      ) : null}
+    </>
+  );
+
   return (
     <FunnelLayout
       step={2}
       title="Upload Your Photo"
       subtitle="Let our AI analyze your current fitness level to create a personalized plan"
+      ctaButton={ctaButton}
     >
       <div className="max-w-2xl mx-auto">
         <Card className="p-8">
@@ -81,18 +111,8 @@ const PhotoUpload = () => {
                   Upload a clear, full-body photo for the most accurate analysis
                 </p>
 
-                <div className="space-y-4">
-                  <Button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="bg-fitness-accent hover:bg-fitness-accent-dark text-white px-8 py-3"
-                  >
-                    <Upload className="w-4 h-4 mr-2" />
-                    Choose Photo
-                  </Button>
-
-                  <div className="text-sm text-fitness-text/60">
-                    Supported formats: JPG, PNG, WebP (max 10MB)
-                  </div>
+                <div className="text-sm text-fitness-text/60">
+                  Supported formats: JPG, PNG, WebP (max 10MB)
                 </div>
               </div>
 
@@ -133,17 +153,9 @@ const PhotoUpload = () => {
                     className="text-center space-y-4"
                   >
                     <Button
-                      onClick={handleAnalyze}
-                      className="bg-fitness-accent hover:bg-fitness-accent-dark text-white px-8 py-3"
-                    >
-                      <Camera className="w-4 h-4 mr-2" />
-                      Analyze Photo
-                    </Button>
-
-                    <Button
                       onClick={() => fileInputRef.current?.click()}
                       variant="outline"
-                      className="ml-4"
+                      className="w-full"
                     >
                       Choose Different Photo
                     </Button>
@@ -219,20 +231,6 @@ const PhotoUpload = () => {
                         </div>
                       </motion.div>
                     </div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 }}
-                      className="text-center"
-                    >
-                      <Button
-                        onClick={handleContinue}
-                        className="bg-fitness-accent hover:bg-fitness-accent-dark text-white px-8 py-3"
-                      >
-                        Continue to Questions
-                      </Button>
-                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>

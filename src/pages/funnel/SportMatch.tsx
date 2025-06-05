@@ -125,6 +125,16 @@ const SportMatch = () => {
     navigate("/funnel/pricing");
   };
 
+  const ctaButton = showResults ? (
+    <Button
+      onClick={handleContinue}
+      className="bg-fitness-accent hover:bg-fitness-accent-dark text-white w-full py-4 text-lg"
+    >
+      <Trophy className="w-5 h-5 mr-2" />
+      Get My Personalized Plan
+    </Button>
+  ) : null;
+
   if (!isInitialized || sportResults.length === 0) {
     return (
       <FunnelLayout
@@ -153,6 +163,7 @@ const SportMatch = () => {
       step={4}
       title="Your Perfect Fitness Match!"
       subtitle="Based on your preferences and goals, we've found your ideal workout"
+      ctaButton={ctaButton}
     >
       <div className="max-w-4xl mx-auto">
         {/* Main Result */}
@@ -292,21 +303,6 @@ const SportMatch = () => {
                     </p>
                   </div>
                 </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1 }}
-                className="text-center"
-              >
-                <Button
-                  onClick={handleContinue}
-                  className="bg-fitness-accent hover:bg-fitness-accent-dark text-white px-8 py-4 text-lg"
-                >
-                  <Trophy className="w-5 h-5 mr-2" />
-                  Get My Personalized Plan
-                </Button>
               </motion.div>
             </motion.div>
           )}
