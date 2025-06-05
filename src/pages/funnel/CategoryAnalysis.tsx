@@ -207,32 +207,7 @@ const CategoryAnalysis = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-center space-y-6"
-            >
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.2, type: "spring" }}
-                className="text-6xl"
-              >
-                ✨
-              </motion.div>
-
-              <div>
-                <h3 className="text-xl font-semibold text-fitness-text mb-2">
-                  Analysis Complete!
-                </h3>
-                <p className="text-fitness-text/70">
-                  We've found your ideal fitness match based on your profile
-                </p>
-              </div>
-
-              <Button
-                onClick={handleContinue}
-                className="bg-fitness-accent hover:bg-fitness-accent-dark text-white px-8 py-3"
-              >
-                See My Perfect Match
-              </Button>
-            </motion.div>
+            ></motion.div>
           )}
         </AnimatePresence>
       </div>
