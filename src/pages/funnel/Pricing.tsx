@@ -167,8 +167,6 @@ const Pricing = () => {
                     </ul>
                   </div>
 
-                  <Button
-                    onClick={() => handleSelectPlan(plan.name)}
                   <div className={`w-full py-3 text-center rounded-md ${
                       plan.popular
                         ? 'bg-fitness-accent/10 text-fitness-accent border-2 border-fitness-accent'
